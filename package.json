@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://kunal0621.github.io/jairam-journey-booking",
+  "homepage": "https://kunal0621.github.io/jairam-online",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
