@@ -1,0 +1,44 @@
+name: Deploy App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '22'
+
+    - name: Create .env file
+      run: |
+        echo "VITE_APPWRITE_URL=${{ secrets.VITE_APPWRITE_URL }}" >> .env
+        echo "VITE_APPWRITE_PROJECT_ID=${{ secrets.VITE_APPWRITE_PROJECT_ID }}" >> .env
+        echo "VITE_APPWRITE_DATABASE_ID=${{ secrets.VITE_APPWRITE_DATABASE_ID }}" >> .env
+        echo "VITE_APPWRITE_STORAGE_ID=${{ secrets.VITE_APPWRITE_STORAGE_ID }}" >> .env
+        echo "VITE_APPWRITE_USER_COLLECTION_ID=${{ secrets.VITE_APPWRITE_USER_COLLECTION_ID }}" >> .env
+        echo "VITE_APPWRITE_POST_COLLECTION_ID=${{ secrets.VITE_APPWRITE_POST_COLLECTION_ID }}" >> .env
+        echo "VITE_APPWRITE_SAVES_COLLECTION_ID=${{ secrets.VITE_APPWRITE_SAVES_COLLECTION_ID }}" >> .env
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run deployment
+      run: npm run deploy # or whatever your deploy command is
+      env:
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASS: ${{ secrets.DB_PASS }}
+        VITE_APPWRITE_URL: ${{ secrets.VITE_APPWRITE_URL }}"
+        VITE_APPWRITE_PROJECT_ID: ${{ secrets.VITE_APPWRITE_PROJECT_ID }}
+        VITE_APPWRITE_DATABASE_ID: ${{ secrets.VITE_APPWRITE_DATABASE_ID }}
+        VITE_APPWRITE_STORAGE_ID: ${{ secrets.VITE_APPWRITE_STORAGE_ID }}
+        VITE_APPWRITE_USER_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_USER_COLLECTION_ID }}
+        VITE_APPWRITE_POST_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_POST_COLLECTION_ID }}
+        VITE_APPWRITE_SAVES_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_SAVES_COLLECTION_ID }}
