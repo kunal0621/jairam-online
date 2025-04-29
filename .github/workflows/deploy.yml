@@ -35,15 +35,12 @@ jobs:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
 
-    - name: Push Changes
-      run: |
-        git add .
-        git commit -m "Automated commit [skip ci]"
-        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{github.repository}}.git HEAD:main
+    - name: Build Project
+      run: npm run build
 
     - name: Run deployment
-      run: npm run deploy # or whatever your deploy command is
       env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASS: ${{ secrets.DB_PASS }}
         VITE_APPWRITE_URL: ${{ secrets.VITE_APPWRITE_URL }}
@@ -53,3 +50,5 @@ jobs:
         VITE_APPWRITE_USER_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_USER_COLLECTION_ID }}
         VITE_APPWRITE_POST_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_POST_COLLECTION_ID }}
         VITE_APPWRITE_SAVES_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_SAVES_COLLECTION_ID }}
+      run: npx gh-pages -d dist -m "Deploy to Github pages [skip ci]"
+      
