@@ -35,6 +35,12 @@ jobs:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
 
+    - name: Push Changes
+      run: |
+        git add .
+        git commit -m "Automated commit [skip ci]"
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{github.repository}}.git HEAD:main
+
     - name: Run deployment
       run: npm run deploy # or whatever your deploy command is
       env:
