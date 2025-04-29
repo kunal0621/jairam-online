@@ -26,9 +26,19 @@ export const ProfileValidation = z.object({
 // ============================================================
 // POST
 // ============================================================
-export const PostValidation = z.object({
-  caption: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
-  file: z.custom<File[]>(),
-  location: z.string().min(1, { message: "This field is required" }).max(1000, { message: "Maximum 1000 characters." }),
-  tags: z.string(),
+export const OrderValidation = z.object({
+  party_name: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
+  party_address: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
+  bording_point: z.string(),
+  bording_date: z.string(),
+  bording_time_frame: z.string(),
+  bording_time: z.string(),
+  departure_time: z.string(),
+  destination_point: z.string(),
+  returning_date: z.string(),
+  returning_time_frame: z.string(),
+  returning_time: z.string(),
+  agreed_amount: z.string(),
+  advance_amount: z.string(),
+  owner_name: z.string(),
 });

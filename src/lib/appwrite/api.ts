@@ -1,7 +1,7 @@
 import { ID, Query } from "appwrite";
 
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
-import { IUpdateOrder, INewPost, INewUser, IUpdateUser } from "@/types";
+import { IUpdateOrder, INewOrder, INewUser, IUpdateUser } from "@/types";
 
 // ============================================================
 // AUTH
@@ -114,48 +114,38 @@ export async function signOutAccount() {
 }
 
 // ============================================================
-// POSTS
+// ORDERS
 // ============================================================
 
-// ============================== CREATE POST
-export async function createPost(post: INewPost) {
+// ============================== CREATE ORDER
+export async function createOrder(order: INewOrder) {
   try {
-    // Upload file to appwrite storage
-    const uploadedFile = await uploadFile(post.file[0]);
-
-    if (!uploadedFile) throw Error;
-
-    // Get file url
-    const fileUrl = getFilePreview(uploadedFile.$id);
-    if (!fileUrl) {
-      await deleteFile(uploadedFile.$id);
-      throw Error;
-    }
-
-    // Convert tags into array
-    const tags = post.tags?.replace(/ /g, "").split(",") || [];
-
-    // Create post
-    const newPost = await databases.createDocument(
+    const newOrder = await databases.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
-      ID.unique(),
+      `${order.party_name}-${order.agreed_amount}`,
       {
-        creator: post.userId,
-        caption: post.caption,
-        imageUrl: fileUrl,
-        imageId: uploadedFile.$id,
-        location: post.location,
-        tags: tags,
+        bording_point: order.bording_point,
+        bording_date: order.bording_date,
+        bording_time: order.bording_time,
+        bording_time_frame: order.bording_time_frame,
+        departure_time: order.departure_time,
+        destination_point: order.destination_point,
+        returning_date: order.returning_date,
+        returning_time_frame: order.returning_time_frame,
+        returning_time: order.returning_time,
+        agreed_amount: order.agreed_amount,
+        advance_amount: order.advance_amount,
+        party_name: order.party_name,
+        party_address: order.party_address
       }
     );
 
-    if (!newPost) {
-      await deleteFile(uploadedFile.$id);
+    if (!newOrder) {
       throw Error;
     }
 
-    return newPost;
+    return newOrder;
   } catch (error) {
     console.log(error);
   }
@@ -265,19 +255,20 @@ export async function getPostById(postId?: string) {
   }
 }
 
-// ============================== UPDATE POST
+// ============================== UPDATE ORDER
 export async function updateOrder(order: IUpdateOrder) {
   
   try {
 
     //  Update post
-    const updatedPost = await databases.updateDocument(
+    const updatedOrder = await databases.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
       order.orderId,
       {
         bording_point: order.bording_point,
         bording_date: order.bording_date,
+        bording_time: order.bording_time,
         bording_time_frame: order.bording_time_frame,
         departure_time: order.departure_time,
         destination_point: order.destination_point,
@@ -289,11 +280,11 @@ export async function updateOrder(order: IUpdateOrder) {
       }
     );
 
-    if (!updatedPost) {
+    if (!updatedOrder) {
       throw Error;
     }
 
-    return updatedPost;
+    return updatedOrder;
   } catch (error) {
     console.log(error);
   }

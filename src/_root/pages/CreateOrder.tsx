@@ -9,53 +9,40 @@ import {
   FormMessage,
   Button,
   Input,
-  Textarea,
   useToast,
+  Select,
 } from "@/components/ui";
-// import useDebounce from "@/hooks/useDebounce";
-import { useUserContext } from "@/context/AuthContext";
 import { useForm } from "react-hook-form";
-import { PostValidation } from "@/lib/validation";
+import { OrderValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCreatePost, useUpdatePost } from "@/lib/react-query/queries";
+import { useCreateOrder, useUpdateOrder } from "@/lib/react-query/queries";
 import { Loader } from "@/components/shared";
-// import { updateOrder } from "@/lib/appwrite/api";
 
-type PostFormProps = {
-  post?: Models.Document;
+type OrderFormProps = {
+  order?: Models.Document;
   action: "Create" | "Update";
 };
 
-const CreateOrder = ({ post, action }: PostFormProps) => {
+const CreateOrder = ({ order, action }: OrderFormProps) => {
     const { toast } = useToast();
-    const { user } = useUserContext();
-    const form = useForm<z.infer<typeof PostValidation>>({
-      resolver: zodResolver(PostValidation),
+    const form = useForm<z.infer<typeof OrderValidation>>({
+      resolver: zodResolver(OrderValidation),
     });
   
     // Query
-    const { mutateAsync: createPost, isLoading: isLoadingCreate } =
-      useCreatePost();
+    const { mutateAsync: createOrder, isLoading: isLoadingCreate } =
+      useCreateOrder();
     const { mutateAsync: updateOrder, isLoading: isLoadingUpdate } =
-      useUpdatePost();
+      useUpdateOrder();
   
     // Handler
-    const handleSubmit = async (value: z.infer<typeof PostValidation>) => {
+    const handleSubmit = async (value: z.infer<typeof OrderValidation>) => {
       // ACTION = UPDATE
-      if (post && action === "Update") {
+      const orderId = order?.orderId
+      if (order && action === "Update") {
         const updatedPost = await updateOrder({
           ...value,
-          orderId: post.$id,
-          bording_point: "",
-          bording_date: "",
-          bording_time_frame: "",
-          departure_time: "",
-          destination_point: "",
-          returning_date: "",
-          returning_time_frame: "",
-          returning_time: "",
-          agreed_amount: "",
-          advance_amount: ""
+          orderId
         });
   
         if (!updatedPost) {
@@ -66,14 +53,13 @@ const CreateOrder = ({ post, action }: PostFormProps) => {
       }
   
       // ACTION = CREATE
-      const newPost = await createPost({
+      const newPost = await createOrder({
         ...value,
-        userId: user.id,
       });
   
       if (!newPost) {
         toast({
-          title: `${action} post failed. Please try again.`,
+          title: `${action} order failed. Please try again.`,
         });
       }
     }
@@ -88,15 +74,16 @@ const CreateOrder = ({ post, action }: PostFormProps) => {
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
         className="flex flex-col gap-9 w-full  max-w-5xl">
+
         <FormField
           control={form.control}
-          name="caption"
+          name="party_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="shad-form_label">Caption</FormLabel>
+              <FormLabel className="shad-form_label">Name</FormLabel>
               <FormControl>
-                <Textarea
-                  className="shad-textarea custom-scrollbar"
+                <Input
+                  className="shad-input" type="text"
                   {...field}
                 />
               </FormControl>
@@ -107,10 +94,27 @@ const CreateOrder = ({ post, action }: PostFormProps) => {
 
         <FormField
           control={form.control}
-          name="location"
+          name="party_address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="shad-form_label">Add Location</FormLabel>
+              <FormLabel className="shad-form_label">Address</FormLabel>
+              <FormControl>
+                <Input
+                  className="shad-input" type="text"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="bording_point"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Bording Place</FormLabel>
               <FormControl>
                 <Input type="text" className="shad-input" {...field} />
               </FormControl>
@@ -121,15 +125,181 @@ const CreateOrder = ({ post, action }: PostFormProps) => {
 
         <FormField
           control={form.control}
-          name="tags"
+          name="bording_date"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="shad-form_label">
-                Add Tags (separated by comma " , ")
+                Bording Date
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Art, Expression, Learn"
+                  type="date"
+                  className="shad-input"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="bording_time"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">
+                Bording Time
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  className="shad-input"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="bording_time_frame"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">
+                Bording Time Frame
+              </FormLabel>
+              <FormControl>
+                <Select
+                  className="shad-input"
+                  defaultValue=''
+                  {...field}
+                >
+                  <option value=''>select time</option>
+                  <option value='morning'>Morning</option>
+                  <option value='evening'>Evening</option>
+                </Select>
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="departure_time"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">
+                Departure Time
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  className="shad-input"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="returning_date"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">
+                Returning Date
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="date"
+                  className="shad-input"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="returning_time"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">
+                Returning Time
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  className="shad-input"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="returning_time_frame"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">
+                Returning Time Frame
+              </FormLabel>
+              <FormControl>
+                <Select
+                  className="shad-input"
+                  {...field}
+                >
+                  <option value=''>select time</option>
+                  <option value='morning'>Morning</option>
+                  <option value='evening'>Evening</option>
+                </Select>
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="agreed_amount"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">
+                Agreed Amount
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  className="shad-input"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="advance_amount"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">
+                Advance Amount
+              </FormLabel>
+              <FormControl>
+                <Input
                   type="text"
                   className="shad-input"
                   {...field}

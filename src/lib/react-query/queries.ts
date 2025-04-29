@@ -12,7 +12,7 @@ import {
   getCurrentUser,
   signOutAccount,
   getUsers,
-  createPost,
+  createOrder,
   getPostById,
   getUserPosts,
   deletePost,
@@ -29,7 +29,7 @@ import {
   unfollowUser,
   updateOrder,
 } from "@/lib/appwrite/api";
-import { INewPost, INewUser, IUpdateOrder, IUpdateUser } from "@/types";
+import { INewOrder, INewUser, IUpdateOrder, IUpdateUser } from "@/types";
 
 // ============================================================
 // AUTH QUERIES
@@ -90,10 +90,10 @@ export const useGetRecentPosts = () => {
   });
 };
 
-export const useCreatePost = () => {
+export const useCreateOrder = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (post: INewPost) => createPost(post),
+    mutationFn: (post: INewOrder) => createOrder(post),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
@@ -118,7 +118,7 @@ export const useGetUserPosts = (userId?: string) => {
   });
 };
 
-export const useUpdatePost = () => {
+export const useUpdateOrder = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (post: IUpdateOrder) => updateOrder(post),
