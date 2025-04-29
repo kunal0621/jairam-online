@@ -71,6 +71,6 @@ Replace the placeholder values with your actual Appwrite credentials. You can ob
 **Running the Project**
 
 ```bash
-npm start
+npm run dev
 ```
 Check the Port where you application is hosted.
