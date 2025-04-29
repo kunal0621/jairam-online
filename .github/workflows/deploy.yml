@@ -50,5 +50,7 @@ jobs:
         VITE_APPWRITE_USER_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_USER_COLLECTION_ID }}
         VITE_APPWRITE_POST_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_POST_COLLECTION_ID }}
         VITE_APPWRITE_SAVES_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_SAVES_COLLECTION_ID }}
-      run: npx gh-pages -d dist -m "Deploy to Github pages [skip ci]"
+      run: npx gh-pages -d dist \
+        --repo="https://$GH_TOKEN@github.com/kunal0621/jairam-online.git" \
+        -m "Deploy to Github pages [skip ci]"
       
