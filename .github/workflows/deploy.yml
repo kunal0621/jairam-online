@@ -50,5 +50,5 @@ jobs:
         VITE_APPWRITE_USER_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_USER_COLLECTION_ID }}
         VITE_APPWRITE_POST_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_POST_COLLECTION_ID }}
         VITE_APPWRITE_SAVES_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_SAVES_COLLECTION_ID }}
-      run: npx gh-pages -d dist -u "github-actions-bot <support+actions@github.com"
+      run: npx gh-pages -d dist -u "github-actions-bot <supportactions@github.com"
       
