@@ -279,4 +279,83 @@
   .shad-button_ghost {
     @apply flex gap-4 items-center justify-start hover:bg-transparent hover:text-white !important;
   }
+
+  .pdf-container {
+    display: block;
+    color: black;
+    background-color: white;
+    padding: 1rem;
+  }
+
+  .watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(0%, -50%);
+    opacity: 2;
+  }
+  
+  .header {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: darkgoldenrod;
+  }
+  
+  .header-sub {
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .header-sub-recipt {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+  
+  .information {
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: forestgreen;
+  }
+  
+  .section {
+    margin-bottom: 15px;
+  }
+  
+  .reference-header {
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+  }
+  
+  .bus-details {
+    font-size: 14px;
+    margin-top: 1rem;
+  }
+  
+  .main_content {
+    font-size: 14px;
+    margin-top: 1rem;
+  }
+  
+  .terms-condition {
+    font-size: 12px;
+    margin-top: 0.5rem;
+  }
+  
+  .party_details_sign {
+    font-size: 14px;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
 }

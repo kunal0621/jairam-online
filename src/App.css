@@ -11,9 +11,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +24,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -39,4 +42,77 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  opacity: 2;
+}
+
+.header {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: darkgoldenrod;
+}
+
+.header-sub {
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.header-sub-recipt {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.information {
+  text-align: center;
+  font-size: 10px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: forestgreen;
+}
+
+.section {
+  margin-bottom: 15px;
+}
+
+.reference-header {
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+}
+
+.bus-details {
+  font-size: 14px;
+  margin-top: 1rem;
+}
+
+.main_content {
+  font-size: 14px;
+  margin-top: 1rem;
+}
+
+.terms-condition {
+  font-size: 12px;
+  margin-top: 0.5rem;
+}
+
+.party_details_sign {
+  font-size: 14px;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
 }

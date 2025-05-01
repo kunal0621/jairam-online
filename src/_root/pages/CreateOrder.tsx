@@ -27,6 +27,22 @@ const CreateOrder = ({ order, action }: OrderFormProps) => {
     const { toast } = useToast();
     const form = useForm<z.infer<typeof OrderValidation>>({
       resolver: zodResolver(OrderValidation),
+      defaultValues: {
+        party_name: order?.party_name || "",
+        party_address: order?.party_address || "",
+        bording_point: order?.bording_point || "",
+        bording_date: order?.bording_date || "",
+        bording_time: order?.bording_time || "",
+        bording_time_frame: order?.bording_time_frame || "",
+        destination_point: order?.destination_point || "",
+        departure_time: order?.departure_time || "",
+        returning_date: order?.returning_date || "",
+        returning_time: order?.returning_time || "",
+        returning_time_frame: order?.returning_time_frame || "",
+        agreed_amount: order?.agreed_amount || "",
+        advance_amount: order?.advance_amount || "",
+        owner_name: order?.owner_name || "",
+      },
     });
   
     // Query
@@ -38,6 +54,7 @@ const CreateOrder = ({ order, action }: OrderFormProps) => {
     // Handler
     const handleSubmit = async (value: z.infer<typeof OrderValidation>) => {
       // ACTION = UPDATE
+      console.log("post submit function", value);
       const orderId = order?.orderId
       if (order && action === "Update") {
         const updatedPost = await updateOrder({
@@ -80,12 +97,52 @@ const CreateOrder = ({ order, action }: OrderFormProps) => {
           name="party_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="shad-form_label">Name</FormLabel>
+              <FormLabel className="shad-form_label">Party Name</FormLabel>
               <FormControl>
                 <Input
                   className="shad-input" type="text"
                   {...field}
                 />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="owner_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Agent Name</FormLabel>
+              <FormControl>
+                <Input
+                  className="shad-input" type="text"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="bus_no"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">
+                Bus Number
+              </FormLabel>
+              <FormControl>
+                <Select
+                  className="shad-input"
+                  {...field}
+                >
+                  <option value=''>select Bus</option>
+                  <option value='0021'>JH 10 CE 0021</option>
+                  <option value='0121'>JH 10 CU 0121</option>
+                </Select>
               </FormControl>
               <FormMessage className="shad-form_message" />
             </FormItem>
@@ -174,13 +231,26 @@ const CreateOrder = ({ order, action }: OrderFormProps) => {
               <FormControl>
                 <Select
                   className="shad-input"
-                  defaultValue=''
                   {...field}
                 >
                   <option value=''>select time</option>
                   <option value='morning'>Morning</option>
                   <option value='evening'>Evening</option>
                 </Select>
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="destination_point"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Destination Place</FormLabel>
+              <FormControl>
+                <Input type="text" className="shad-input" {...field} />
               </FormControl>
               <FormMessage className="shad-form_message" />
             </FormItem>

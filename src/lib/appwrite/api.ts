@@ -123,7 +123,7 @@ export async function createOrder(order: INewOrder) {
     const newOrder = await databases.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
-      `${order.party_name}-${order.agreed_amount}`,
+      `${order.bording_date}-${order.agreed_amount}`,
       {
         bording_point: order.bording_point,
         bording_date: order.bording_date,
@@ -137,7 +137,9 @@ export async function createOrder(order: INewOrder) {
         agreed_amount: order.agreed_amount,
         advance_amount: order.advance_amount,
         party_name: order.party_name,
-        party_address: order.party_address
+        party_address: order.party_address,
+        owner_name: order.owner_name,
+        bus_no: order.bus_no,
       }
     );
 
@@ -277,6 +279,10 @@ export async function updateOrder(order: IUpdateOrder) {
         returning_time: order.returning_time,
         agreed_amount: order.agreed_amount,
         advance_amount: order.advance_amount,
+        party_name: order.party_name,
+        party_address: order.party_address,
+        owner_name: order.owner_name,
+        bus_no: order.bus_no, 
       }
     );
 

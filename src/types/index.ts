@@ -14,6 +14,8 @@ export type IUpdateUser = {
 };
 
 export type INewOrder = {
+  bus_no: any;
+  owner_name: any;
   bording_point: string;
   bording_date: string;
   bording_time: string;
@@ -30,6 +32,8 @@ export type INewOrder = {
 };
 
 export type IUpdateOrder = {
+  bus_no: any;
+  owner_name: any;
   orderId: string
   bording_point: string;
   bording_date: string;

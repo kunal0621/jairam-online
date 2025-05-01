@@ -41,4 +41,5 @@ export const OrderValidation = z.object({
   agreed_amount: z.string(),
   advance_amount: z.string(),
   owner_name: z.string(),
+  bus_no: z.string(),
 });

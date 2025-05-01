@@ -1,9 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 
+import RootLayoutPDF from "./_root/RootLayoutPdf";
 import {
   Home,
   CreateOrder,
   ExistingOrder,
+  InvoiceDetails
 } from "@/_root/pages";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
@@ -28,6 +30,9 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="/booking" element={<CreateOrder action={"Create"} />} />
           <Route path="/existingOrder" element={<ExistingOrder />} />
+        </Route>
+        <Route element={<RootLayoutPDF />}>
+          <Route path="/invoiceDetails" element={<InvoiceDetails />} />
         </Route>
       </Routes>
 
